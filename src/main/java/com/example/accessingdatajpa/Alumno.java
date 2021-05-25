@@ -1,53 +1,69 @@
 package com.example.accessingdatajpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 
 // Clase asignatura
+@Entity
 class Asignatura{
     // Atributos
-    public String nombre;
-    public int nota;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    private String nombre;
+    private int nota;
 
-    public Asignatura(){
-
-//    public Asignatura(String nombre, int nota){
-//        this.nombre=nombre;
-//        this.nota=nota;
-    }
-}
-
-// Clase alumno
-public class Alumno {
-    // Atributos
-    public String nombre;
-    public int edad;
-    public List<Asignatura> asignaturas;
-
-    // Constructor.
-    public Alumno(){
-
-    }
-//    public Alumno(String nombre, int edad, List<Asignatura> asignaturas){
-//        this.nombre=nombre;
-//        this.edad=edad;
-//        this.asignaturas = asignaturas;
-//    }
-
-    // Añadir asignatura.
-    public void addAsignatura(Asignatura asignatura){
-        this.asignaturas.add(asignatura);
+    public int getId() {
+        return id;
     }
 
-    // Getters
     public String getNombre() {
         return nombre;
     }
+
     public int getNota() {
+        return nota;
+    }
+
+
+
+
+}
+
+// Clase alumno
+@Entity
+public class Alumno {
+    // Atributos
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
+    private int id;
+    private String nombre;
+    private int edad;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Asignatura> asignaturas;
+
+
+    // Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getEdad() {
         return edad;
     }
+
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
     }
+
 }
 
 
